@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 210 40% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 40% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 40% 11%;
+
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 210 40% 11%;
+
+    --muted: 210 20% 94%;
+    --muted-foreground: 210 15% 45%;
+
+    --accent: 142 71% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 199 89% 48%;
+
+    --radius: 0.625rem;
+
+    /* Custom tokens */
+    --ocean: 199 89% 48%;
+    --ocean-light: 199 89% 95%;
+    --ocean-dark: 199 89% 38%;
+    --forest: 142 71% 45%;
+    --forest-light: 142 71% 95%;
+    --forest-dark: 142 71% 35%;
+    --silver: 210 20% 75%;
+    --silver-light: 210 20% 96%;
+    --silver-dark: 210 20% 50%;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(210 20% 11% / 0.03);
+    --shadow-md: 0 4px 6px -1px hsl(210 20% 11% / 0.05), 0 2px 4px -2px hsl(210 20% 11% / 0.03);
+    --shadow-lg: 0 10px 15px -3px hsl(210 20% 11% / 0.08), 0 4px 6px -4px hsl(210 20% 11% / 0.03);
+    --shadow-card: 0 1px 3px 0 hsl(210 20% 11% / 0.04), 0 1px 2px -1px hsl(210 20% 11% / 0.04);
+    --shadow-elevated: 0 20px 25px -5px hsl(210 20% 11% / 0.08), 0 8px 10px -6px hsl(210 20% 11% / 0.04);
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 210 40% 11%;
+    --sidebar-primary: 199 89% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 20% 96%;
+    --sidebar-accent-foreground: 210 40% 11%;
+    --sidebar-border: 210 20% 92%;
+    --sidebar-ring: 199 89% 48%;
+  }
+
+  .dark {
+    --background: 210 40% 6%;
+    --foreground: 210 20% 96%;
+
+    --card: 210 40% 9%;
+    --card-foreground: 210 20% 96%;
+
+    --popover: 210 40% 9%;
+    --popover-foreground: 210 20% 96%;
+
+    --primary: 199 89% 55%;
+    --primary-foreground: 210 40% 6%;
+
+    --secondary: 210 30% 15%;
+    --secondary-foreground: 210 20% 96%;
+
+    --muted: 210 30% 18%;
+    --muted-foreground: 210 15% 60%;
+
+    --accent: 142 71% 50%;
+    --accent-foreground: 210 40% 6%;
+
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 30% 18%;
+    --input: 210 30% 18%;
+    --ring: 199 89% 55%;
+
+    --ocean: 199 89% 55%;
+    --ocean-light: 199 50% 15%;
+    --ocean-dark: 199 89% 45%;
+    --forest: 142 71% 50%;
+    --forest-light: 142 40% 15%;
+    --forest-dark: 142 71% 40%;
+    --silver: 210 20% 40%;
+    --silver-light: 210 30% 18%;
+    --silver-dark: 210 20% 60%;
+
+    --sidebar-background: 210 40% 9%;
+    --sidebar-foreground: 210 20% 96%;
+    --sidebar-primary: 199 89% 55%;
+    --sidebar-primary-foreground: 210 40% 6%;
+    --sidebar-accent: 210 30% 15%;
+    --sidebar-accent-foreground: 210 20% 96%;
+    --sidebar-border: 210 30% 18%;
+    --sidebar-ring: 199 89% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-sm border border-border/50 shadow-card;
+  }
+
+  .gradient-ocean {
+    background: linear-gradient(135deg, hsl(var(--ocean)) 0%, hsl(var(--ocean-dark)) 100%);
+  }
+
+  .gradient-forest {
+    background: linear-gradient(135deg, hsl(var(--forest)) 0%, hsl(var(--forest-dark)) 100%);
+  }
+
+  .gradient-hero {
+    background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--ocean-light)) 100%);
+  }
+
+  .text-gradient-ocean {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--ocean)) 0%, hsl(var(--ocean-dark)) 100%);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+}
