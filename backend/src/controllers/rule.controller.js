@@ -1,8 +1,16 @@
-const driveService = require("../services/drive.service");
-const ruleEngine = require("../services/ruleEngine.service");
+import * as driveService from "../services/drive.service.js";
+import * as ruleEngine from "../services/ruleEngine.service.js";
 
-exports.analyzeDrive = async (req, res) => {
-    const files = await driveService.listFiles();
-    const suggestions = ruleEngine.runRules(files);
-    res.json(suggestions);
+export const analyzeDrive = async (req, res) => {
+    try {
+        const tokens = req.user?.tokens;
+        if (!tokens) return res.status(401).json({ error: "Not authenticated" });
+
+        const files = await driveService.listFiles(tokens);
+        const suggestions = ruleEngine.runRules(files);
+        res.json(suggestions);
+    } catch (error) {
+        console.error("Rule analyze error:", error.message);
+        res.status(500).json({ error: error.message });
+    }
 };

@@ -1,8 +1,6 @@
 let tokens = null;
 
-module.exports = {
-    saveTokens: (newTokens) => {
-        tokens = newTokens;
-    },
-    getTokens: () => tokens,
-};
+export function saveTokens(newTokens) {
+    tokens = newTokens;
+}
+export function getTokens() { return tokens; }

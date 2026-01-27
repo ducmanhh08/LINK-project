@@ -1,18 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { FileRow } from "@/components/files/FileRow";
 import { Button } from "@/components/ui/button";
 import { mockFiles, FileItem } from "@/data/mockFiles";
 import { Search, Filter, Sparkles, FolderOpen, ArrowRight } from "lucide-react";
+import { fetchFiles } from "@/lib/api";
 
 export default function Browser() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFiles, setSelectedFiles] = useState<Set<string>>(new Set());
+  const [files, setFiles] = useState<FileItem[]>(mockFiles);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const filesWithSuggestions = mockFiles.filter((f) => f.suggestion);
-  const filteredFiles = mockFiles.filter((f) =>
+  // Fetch files from backend on mount
+  useEffect(() => {
+    const loadFiles = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const fetchedFiles = await fetchFiles();
+        if (Array.isArray(fetchedFiles)) {
+          setFiles(fetchedFiles);
+        }
+      } catch (err) {
+        console.error("Failed to fetch files:", err);
+        setError("Could not load files from Google Drive. Using demo data.");
+        setFiles(mockFiles);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadFiles();
+  }, []);
+
+  const filesWithSuggestions = files.filter((f) => f.suggestion);
+  const filteredFiles = files.filter((f) =>
     f.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -47,6 +73,20 @@ export default function Browser() {
           </Button>
         </div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-sm text-yellow-800">
+            {error}
+          </div>
+        )}
+
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-8">
+            <p className="text-muted-foreground">Loading your files...</p>
+          </div>
+        )}
+
         {/* Stats */}
         <div className="grid gap-4 sm:grid-cols-3">
           <div className="rounded-xl border border-border bg-card p-4">
@@ -55,7 +95,7 @@ export default function Browser() {
                 <FolderOpen className="h-5 w-5 text-ocean" />
               </div>
               <div>
-                <p className="text-2xl font-bold">{mockFiles.length}</p>
+                <p className="text-2xl font-bold">{files.length}</p>
                 <p className="text-sm text-muted-foreground">Total files</p>
               </div>
             </div>
@@ -80,7 +120,7 @@ export default function Browser() {
               </div>
               <div>
                 <p className="text-2xl font-bold">
-                  {mockFiles.filter((f) => f.type === "folder").length}
+                  {files.filter((f) => f.type === "folder").length}
                 </p>
                 <p className="text-sm text-muted-foreground">Folders</p>
               </div>

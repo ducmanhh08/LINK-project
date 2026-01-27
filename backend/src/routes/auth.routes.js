@@ -1,7 +1,11 @@
-const router = require("express").Router();
-const controller = require("../controllers/auth.controller");
+import express from "express";
+import * as controller from "../controllers/auth.controller.js";
+
+const router = express.Router();
 
 router.get("/google", controller.login);
 router.get("/google/callback", controller.callback);
+router.post("/logout", controller.logout);
+router.get("/status", controller.getCurrentUser);
 
-module.exports = router;
+export default router;

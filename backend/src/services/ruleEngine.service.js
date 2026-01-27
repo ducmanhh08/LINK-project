@@ -1,7 +1,7 @@
-const rules = require("../data/mockRules");
+import rules from "../data/mockRules.js";
 
-exports.runRules = (files) => {
-    return files.map((file) => {
+export const runRules = (files) => {
+    return (files || []).map((file) => {
         const matchedRule = rules.find((r) => r.condition(file));
         return {
             file: file.name,

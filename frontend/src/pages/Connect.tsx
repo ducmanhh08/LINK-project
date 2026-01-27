@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { Link2, Shield, Zap, CheckCircle2 } from "lucide-react";
@@ -10,16 +9,15 @@ const benefits = [
   "Disconnect anytime from settings",
 ];
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 export default function Connect() {
-  const navigate = useNavigate();
   const [isConnecting, setIsConnecting] = useState(false);
 
   const handleConnect = () => {
     setIsConnecting(true);
-    // Simulate connection delay
-    setTimeout(() => {
-      navigate("/browser");
-    }, 1500);
+    // Redirect to backend OAuth endpoint
+    window.location.href = `${BACKEND_URL}/api/auth/google`;
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { 
@@ -11,6 +11,8 @@ import {
   Save
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { fetchRules, logout } from "@/lib/api";
+import { useNavigate } from "react-router-dom";
 
 interface Rule {
   id: string;
@@ -53,8 +55,35 @@ const defaultRules: Rule[] = [
 ];
 
 export default function Settings() {
-  const [rules, setRules] = useState(defaultRules);
+  const navigate = useNavigate();
+  const [rules, setRules] = useState<Rule[]>(defaultRules);
   const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch rules from backend on mount
+  useEffect(() => {
+    const loadRules = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const fetchedRules = await fetchRules();
+        
+        // If rules come from backend, update state
+        if (Array.isArray(fetchedRules)) {
+          setRules(fetchedRules);
+        }
+      } catch (err) {
+        console.error("Failed to fetch rules:", err);
+        // Keep default rules if fetch fails
+        setError("Could not load rules from server. Using default rules.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadRules();
+  }, []);
 
   const toggleRule = (id: string) => {
     setRules((prev) =>
@@ -70,6 +99,18 @@ export default function Settings() {
     setTimeout(() => setSaved(false), 2000);
   };
 
+  const handleDisconnect = async () => {
+    if (window.confirm("Are you sure you want to disconnect Google Drive?")) {
+      try {
+        await logout();
+        navigate("/connect");
+      } catch (err) {
+        console.error("Logout failed:", err);
+        alert("Failed to disconnect. Please try again.");
+      }
+    }
+  };
+
   return (
     <AppLayout>
       <div className="max-w-2xl space-y-8">
@@ -80,6 +121,20 @@ export default function Settings() {
             Configure organization rules and preferences
           </p>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-sm text-yellow-800">
+            {error}
+          </div>
+        )}
+
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-8">
+            <p className="text-muted-foreground">Loading rules...</p>
+          </div>
+        )}
 
         {/* Organization Rules */}
         <section className="space-y-4">
@@ -195,7 +250,11 @@ export default function Settings() {
                   Remove access to your Google Drive account
                 </p>
               </div>
-              <Button variant="destructive" size="sm">
+              <Button 
+                variant="destructive" 
+                size="sm"
+                onClick={handleDisconnect}
+              >
                 Disconnect
               </Button>
             </div>

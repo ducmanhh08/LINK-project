@@ -1,6 +1,8 @@
-const router = require("express").Router();
-const controller = require("../controllers/rule.controller");
+import express from "express";
+import * as controller from "../controllers/rule.controller.js";
+
+const router = express.Router();
 
 router.get("/analyze", controller.analyzeDrive);
 
-module.exports = router;
+export default router;

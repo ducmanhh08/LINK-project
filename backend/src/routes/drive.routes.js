@@ -1,6 +1,9 @@
-const router = require("express").Router();
-const controller = require("../controllers/drive.controller");
+import express from "express";
+import * as controller from "../controllers/drive.controller.js";
+import requireAuth from "../middleware/auth.middleware.js";
 
-router.get("/files", controller.getFiles);
+const router = express.Router();
 
-module.exports = router;
+router.get("/files", requireAuth, controller.getFiles);
+
+export default router;
