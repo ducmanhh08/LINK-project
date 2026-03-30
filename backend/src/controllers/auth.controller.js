@@ -52,9 +52,7 @@ export async function callback(req, res) {
                 console.error("Session save error:", err);
                 return res.status(500).send("Session error");
             }
-            // Redirect to frontend browser page with session cookie
-            const frontendUrl = process.env.FRONTEND_URL || "http://localhost:8080";
-            res.redirect(`${frontendUrl}/browser`);
+            res.send("✅ Google Drive connected. You can close this tab.");
         });
     } catch (error) {
         console.error("OAuth callback error:", error.message);

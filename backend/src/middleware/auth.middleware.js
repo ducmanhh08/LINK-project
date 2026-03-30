@@ -3,7 +3,6 @@ import { getTokens } from "../utils/tokenStore.js";
 export default (req, res, next) => {
   // Check session first (most reliable since it's set after successful OAuth callback)
 
-  console.log("AUTH MIDDLEWARE - Session user:", req.session?.user);
   if (!req.session.user) {
     return res.status(401).json({
       error: "Unauthorized",
@@ -20,8 +19,6 @@ export default (req, res, next) => {
       message: "Authentication failed. Please reconnect Google Drive.",
     });
   }
-
-  console.log("AUTH MIDDLEWARE - User authenticated:", req.session.user.email);
 
   req.user = {
     email: req.session.user.email,
