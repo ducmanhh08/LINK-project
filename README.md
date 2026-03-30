@@ -20,10 +20,15 @@ At its core, the platform combines Google Drive integration, rule-based analysis
 ### User Flow
 
 **1.** Open the app in your browser
+
 **2.** Click “Connect with Google”
+
 **3.** Authenticate via Google OAuth
+
 **4.** Browse your Google Drive files
+
 **5.** View AI-generated suggestions for organizing content
+
 **6.** Adjust rules and preferences in the settings page
 
 ## Features
