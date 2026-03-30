@@ -13,26 +13,33 @@ At its core, the platform combines Google Drive integration, rule-based analysis
 
 ## Usage
 
+
 ![Landing Page](./frontend/src/images/landing-page.png)
 
 
 ### User Flow
 
-1. Open the app in your browser
-2. Click “Connect with Google”
-3. Authenticate via Google OAuth
-4. Browse your Google Drive files
-5. View AI-generated suggestions for organizing content
-6. Adjust rules and preferences in the settings page
+**1.** Open the app in your browser
+**2.** Click “Connect with Google”
+**3.** Authenticate via Google OAuth
+**4.** Browse your Google Drive files
+**5.** View AI-generated suggestions for organizing content
+**6.** Adjust rules and preferences in the settings page
 
 ## Features
 
 🔐 **Authentication** - Google OAuth 2.0 Authentication
+
 📂 **Real Data** - Real-time Google Drive file access
+
 🤖 **AI Suggestions** - AI-powered organization suggestions
+
 ⚙️ **Settings Management** - Customizable rules and settings
+
 🔄 **Session Management** - Session-based authentication (secure cookies)
+
 🧠 **Real Engine** - Intelligent file analysis engine
+
 ✅ **Error Handling** - Graceful fallbacks to demo data 
 
 ## Technologies Used
@@ -51,7 +58,7 @@ This project is built with:
 - Google Drive API
 - Session-based Authentication
 
-### Installation
+## Installation
 
 **Prerequisites**
 
@@ -59,7 +66,6 @@ This project is built with:
 - npm or bun
 - Google Cloud Project with OAuth credentials
 
----
 
 ## Setup Instructions
 
@@ -131,7 +137,7 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
----
+
 
 ## License
 
@@ -147,3 +153,5 @@ See the LICENSE file for more details.
 - Tokens are stored securely in session (not in localStorage)
 - CORS is configured to accept requests from frontend with credentials support
 - All protected routes require valid session authentication
+
+---
